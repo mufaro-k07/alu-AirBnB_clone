@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """This module defines a class to manage file storage for hbnb clone"""
 import json
+import os
 
 
 class FileStorage:
@@ -16,43 +17,35 @@ class FileStorage:
                 if cls == val.__class__:
                     temp[key] = val
             return temp
-
         return FileStorage.__objects
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
-        self.all().update({obj.to_dict()['__class__'] + '.' + obj.id: obj})
+        key = "{}.{}".format(obj.__class__.__name__, obj.id)
+        FileStorage.__objects[key] = obj
 
     def save(self):
         """Saves storage dictionary to file"""
+        temp = {}
+        for key, val in FileStorage.__objects.items():
+            temp[key] = val.to_dict()
         with open(FileStorage.__file_path, 'w') as f:
-            temp = {}
-            temp.update(FileStorage.__objects)
-            for key, val in temp.items():
-                temp[key] = val.to_dict()
             json.dump(temp, f)
 
     def reload(self):
-        """Loads storage dictionary from file"""
+        """Deserializes the JSON file to __objects"""
+        if not os.path.exists(FileStorage.__file_path):
+            return
+        
         from models.base_model import BaseModel
-        from models.user import User
-        from models.place import Place
-        from models.state import State
-        from models.city import City
-        from models.amenity import Amenity
-        from models.review import Review
-
-        classes = {
-            'BaseModel': BaseModel, 'User': User, 'Place': Place,
-            'State': State, 'City': City, 'Amenity': Amenity,
-            'Review': Review
-        }
+        
         try:
-            temp = {}
-            with open(FileStorage.__file_path, 'r') as f:
-                temp = json.load(f)
-                for key, val in temp.items():
-                    self.all()[key] = classes[val['__class__']](**val)
+            with open(FileStorage.__file_path, "r") as f:
+                obj_dict = json.load(f)
+            for key, value in obj_dict.items():
+                class_name = value["__class__"]
+                if class_name == "BaseModel":
+                    FileStorage.__objects[key] = BaseModel(**value)
         except FileNotFoundError:
             pass
 
@@ -60,8 +53,8 @@ class FileStorage:
         """Delete an object from the __objects"""
         if obj is not None:
             key = obj.__class__.__name__ + '.' + obj.id
-            if key in self.__objects:
-                del self.__objects[key]
+            if key in FileStorage.__objects:
+                del FileStorage.__objects[key]
                 self.save()
 
     def close(self):

@@ -269,4 +269,8 @@ class HBNBCommand(cmd.Cmd):
 
 
 if __name__ == '__main__':
+<<<<<<< HEAD
     HBNBCommand().cmdloop()
+=======
+    HBNBCommand().cmdloop()
+>>>>>>> 9124b15d35370ca05fd80c6e79a8083e1f5a9a8d
