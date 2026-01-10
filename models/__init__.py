@@ -1,17 +1,7 @@
 #!/usr/bin/python3
-"""
-Models package initializer
-"""
-class StorageStub:
-    """Temporary storage stub"""
+"""models package initializer"""
 
-    def new(self, obj):
-        """Stub method"""
-        pass
+from models.engine.file_storage import FileStorage
 
-    def save(self):
-        """Stub method"""
-        pass
-
-
-storage = StorageStub()
+storage = FileStorage()
+storage.reload()
