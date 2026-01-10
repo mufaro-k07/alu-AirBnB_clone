@@ -3,28 +3,29 @@
 BaseModel module
 Define the BaseModel class
 """
-
 import uuid
 from datetime import datetime
 from models import storage
 
+
 class BaseModel:
     """BaseModel class defines all common attributes for other classes."""
-
+    
     def __init__(self, *args, **kwargs):
         """Initialises a new BaseModel instance."""
         if kwargs:
             for key, value in kwargs.items():
                 if key == "__class__":
                     continue
-                if key in ["created_at, updated_at"]:
+                if key in ["created_at", "updated_at"]:  # Fixed: separate strings
                     value = datetime.fromisoformat(value)
                 setattr(self, key, value)
         else:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = self.created_at
-            storage.new(self)
+        
+        storage.new(self)  # Moved outside: always register with storage
 
     def save(self):
         """Update updated_at and saves the instance"""
