@@ -26,6 +26,14 @@ class BaseModel:
             self.updated_at = self.created_at
             storage.new(self)
 
+    def __str__(self):
+        """Return string representation of the instance"""
+        return "[{}] ({}) {}".format(
+            self.__class__.__name__,
+            self.id,
+            self.__dict__
+        )
+
     def save(self):
         """Update updated_at and saves the instance"""
         self.updated_at = datetime.now()
