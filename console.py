@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 """Defines the HBNB console 
 which provides
-a command-line interface for the AirBnB clone project"""
+a command-line interface for the AirBnB clone project
+"""
 import cmd
 from shlex import split
 from models import storage
@@ -272,5 +273,6 @@ class HBNBCommand(cmd.Cmd):
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
+
 
 
