@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Defines the HBNB console which provides a command-line interface for the AirBnB clone project"""
+"""Defines the HBNB console."""
 import cmd
 from shlex import split
 from models import storage
