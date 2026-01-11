@@ -50,6 +50,7 @@ class BaseModel:
         """
         Update updated_at with current datetime and save to storage
         """
+        from models import storage
         self.updated_at = datetime.now()
         storage.save()
 
