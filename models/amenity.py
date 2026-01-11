@@ -1,17 +1,13 @@
 #!/usr/bin/python3
-"""" State Module for HBNB project """
-from models.base_model import BaseModel, Base
-from sqlalchemy import Column, String
-from sqlalchemy.orm import relationship
+"""Amenity module"""
+from models.base_model import BaseModel
 
-class Amenity(BaseModel, Base):
-    """Amenity class to store amenity information"""
-    
-    __tablename__ = "amenities"
-    
-    name = Column(String(128), nullable=False)
-    place_amenities = relationship("Place", secondary="place_amenity", back_populates="amenities")
-    
-    # def __init__(self, *args, **kwargs):
-    #     """initializes amenity"""
-    #     super().__init__(*args, **kwargs)
+
+class Amenity(BaseModel):
+    """
+    Amenity class that inherits from BaseModel
+
+    Public class attributes:
+        name (str): Name of the amenity
+    """
+    name = ""
