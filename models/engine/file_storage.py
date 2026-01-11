@@ -27,6 +27,8 @@ class FileStorage:
 
     def reload(self):
         """Loads storage dictionary from file"""
+        if not os.path.exists(FileStorage.__file_path):
+             return
         from models.base_model import BaseModel
         from models.user import User
         from models.place import Place
@@ -47,4 +49,5 @@ class FileStorage:
                 for key, val in temp.items():
                         self.all()[key] = classes[val['__class__']](**val)
         except FileNotFoundError:
+
             pass
