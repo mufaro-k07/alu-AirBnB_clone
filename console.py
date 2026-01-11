@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""
-Console module
-Command interpreter for AirBnB clone project
+"""Console Command interpreter for AirBnB clone project
 """
 import cmd
 from models.base_model import BaseModel
